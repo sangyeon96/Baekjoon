@@ -49,10 +49,14 @@ int parenMatch(char * ex) {
 			printf("Wrong Input\n");
 		}
 	}
-	if(isEmpty(checkParen))
+	if(isEmpty(checkParen)) {
+		free(checkParen);
 		return 1;
-	else
+	}
+	else {
+		free(checkParen);
 		return 0;
+	}
 }
 
 int main(void) {
