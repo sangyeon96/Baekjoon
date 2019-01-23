@@ -112,19 +112,34 @@ void printDeque(Deque * deq) {
     printf("[");
     while(tmpNode != NULL) {
         if(tmpNode == deq->tail)
-            printf("%d]\n", tmpNode->data);
+            printf("%d", tmpNode->data);
         else
             printf("%d,", tmpNode->data);
         tmpNode = tmpNode->next;
     }
+    printf("]\n");
+}
+
+void printReverseDeque(Deque * deq) {
+    Node * tmpNode = deq->tail;
+    printf("[");
+    while(tmpNode != NULL) {
+        if(tmpNode == deq->head)
+            printf("%d", tmpNode->data);
+        else
+            printf("%d,", tmpNode->data);
+        tmpNode = tmpNode->prev;
+    }
+    printf("]\n");
 }
 
 int main(void) {
     int testcaseCount, deqSize, deqData, p_length;
-    int tmpSize, RCount, i, j, k;
+    int i, j;
     char p[P_MAXSIZE];
     char ch;
     int errorFlag = 0;
+    int RCount = 0;
 
     scanf("%d", &testcaseCount);
     for(i = 0; i < testcaseCount; i++) {
@@ -149,36 +164,33 @@ int main(void) {
         p_length = strlen(p);
         for(j = 0; j < p_length; j++) {
             ch = p[j];
-            if(ch == 'R') {
-                tmpSize = (&deq)->size;
-                RCount = tmpSize - 1;
-                Node * tmpNode = (&deq)->tail;
-                for(k = 0; k < RCount; k++) {
-                    tmpNode = tmpNode->prev;
-                    DQAddLast(&deq, tmpNode->data);
-                }
-                for(k = 0; k < RCount; k++) {
-                    DQRemoveFirst(&deq);
-                }
-                //printDeque(&deq);
-            }
+            if(ch == 'R')
+                RCount++;
             else if(ch == 'D') {
                 if(DQIsEmpty(&deq))
                     errorFlag = 1;
-                else
-                    DQRemoveFirst(&deq);
+                else {
+                    if(RCount % 2 != 0)
+                        DQRemoveLast(&deq);
+                    else //RCount % 2 == 0
+                        DQRemoveFirst(&deq);
+                }
             }
             else {
                 printf("Wrong Type of P\n");
                 exit(-1);
             }
         }
-        if(errorFlag) {
+
+        if(errorFlag)
             printf("error\n");
-            errorFlag = 0;
-        }
+        else if(RCount % 2 != 0)
+            printReverseDeque(&deq);
         else
             printDeque(&deq);
+
+        errorFlag = 0;
+        RCount = 0;
     }
     return 0;
 }
