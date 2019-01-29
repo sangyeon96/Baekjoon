@@ -49,7 +49,7 @@ int main(void) {
     printf("%d\n", median);
     
     maxCnt = 0;
-    for(i = 0; i < MAXABS; i++) { //시간초과가 우려된다..
+    for(i = 0; i < MAXABS; i++) {
     	/*
     	-4000 ~ 4000(인덱스 0 ~ MAXABS - 1)까지 각 숫자가 몇 개 있는지
     	sameNumCnt배열에 담겨있다.
